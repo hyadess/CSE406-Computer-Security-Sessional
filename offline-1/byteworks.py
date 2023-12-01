@@ -16,7 +16,15 @@ def byteSubstitute(byte):  # a 8 bit bytestring should be given.................
     #print(subByte)
     return subByte  #returns as a bitstring
 
-
+def invByteSubstitute(byte):  # a 8 bit bytestring should be given.................
+    row=int(byte[0:4],2)
+    column=int(byte[4:],2)
+    #print(column)
+    subByte=bitvector_demo.InvSbox[16*row+column]
+    subByte=format(subByte, '08b')
+    
+    #print(subByte)
+    return subByte  #returns as a bitstring
 
 #byteSubstitute(binaryConvert('B'))
 #byteSubstitute('01100111')

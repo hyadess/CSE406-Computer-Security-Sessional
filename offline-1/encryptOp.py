@@ -42,6 +42,16 @@ def mixColumn(array):
     return newArray
 
 
+def msgArrayToString(array):
+    str=""
+    for i in range(0,4):
+        for j in range(0,4):
+            str=str+chr(int(array[j][i],2))
+            #print(str)
+    # str = ''.join([chr(int(''.join(row), 2)) for row in array])
+    return str
+
+
 def encryption(str):
     msgArray=keyGeneration.keyToBinary(str)
     msgArray=np.transpose(msgArray)
@@ -58,8 +68,13 @@ def encryption(str):
     msgArray=bytesubstitution(msgArray)
     msgArray=shiftRow(msgArray)
     msgArray=addRoundKey(msgArray,10)
-    keyGeneration.showMatrix(msgArray)
-    return msgArray
 
 
-encryption('Two One Nine Two')
+    #keyGeneration.showMatrix(msgArray)
+    str=msgArrayToString(msgArray)
+    return str
+
+
+ciphertext=encryption('Two One Nine Two')
+
+#print("'"+ciphertext+"'")
