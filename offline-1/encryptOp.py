@@ -75,6 +75,6 @@ def encryption(str):
     return str
 
 
-ciphertext=encryption('Two One Nine Two')
+# ciphertext=encryption('Two One Nine Two')
 
-#print("'"+ciphertext+"'")
+# #print("'"+ciphertext+"'")
