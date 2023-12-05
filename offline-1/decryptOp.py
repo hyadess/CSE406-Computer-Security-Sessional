@@ -51,9 +51,11 @@ def msgArrayToString(array):
     return str
 
 
-def decryption(str):
-    msgArray=keyGeneration.keyToBinary(str)
-    msgArray=np.transpose(msgArray)
+def decryption(msg):
+    np_msgArray=np.array(msg)
+    row=column=4
+    np_2dmsgArray=np.reshape(np_msgArray,(row,column))
+    msgArray=np.transpose(np_2dmsgArray)  # 2d array of bitstrings is created
     
     msgArray=addRoundKey(msgArray,10) #round 0
    
@@ -69,8 +71,11 @@ def decryption(str):
     msgArray=invBytesubstitution(msgArray)
     msgArray=addRoundKey(msgArray,0)
     #keyGeneration.showMatrix(msgArray)
-    str=msgArrayToString(msgArray)
-    return str
+    #str=msgArrayToString(msgArray)
+    msgArray=np.transpose(msgArray)
+    ans=msgArray.flatten()  # we converted into 1d array of bitstrings again
+
+    return ans
 
 
 

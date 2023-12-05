@@ -52,10 +52,13 @@ def msgArrayToString(array):
     return str
 
 
-def encryption(str):
-    msgArray=keyGeneration.keyToBinary(str)
-    msgArray=np.transpose(msgArray)
-    
+def encryption(msg): # an  1d array of bitsrings is given, returns another 1d array of bitstrings
+
+    np_msgArray=np.array(msg)
+    row=column=4
+    np_2dmsgArray=np.reshape(np_msgArray,(row,column))
+    msgArray=np.transpose(np_2dmsgArray)  # 2d array of bitstrings is created
+
     msgArray=addRoundKey(msgArray,0) #round 0
    
 
@@ -71,8 +74,16 @@ def encryption(str):
 
 
     #keyGeneration.showMatrix(msgArray)
-    str=msgArrayToString(msgArray)
-    return str
+    #str=msgArrayToString(msgArray)
+
+    msgArray=np.transpose(msgArray)
+    ans=msgArray.flatten()  # we converted into 1d array of bitstrings again
+
+    return ans
+
+
+
+
 
 
 # ciphertext=encryption('Two One Nine Two')
