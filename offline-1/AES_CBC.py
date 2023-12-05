@@ -46,5 +46,5 @@ def CBC_decrypt(array):  # input is an array of  bitstrings....
     return message
 
 
-print(CBC_decrypt(CBC_encrypt('I am proud. but no that much...... now I can add more and more!!!!??????______!')))
+#print(CBC_decrypt(CBC_encrypt('I am proud. but no that much...... now I can add more and more!!!!??????______!')))
 

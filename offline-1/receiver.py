@@ -1,5 +1,8 @@
 import socket
 import decryptOp
+import pickle
+import AES_CBC
+import AES_CTR
 # Create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -19,8 +22,10 @@ while True:
 
     try:
         # Receive data from the client and send it back
-        data = client_socket.recv(1024)
-        print("Received:", decryptOp.decryption(data.decode()))
+        data = client_socket.recv(40960)
+        received_bitstrings=pickle.loads(data)
+        message=AES_CBC.CBC_decrypt(received_bitstrings)
+        print(message)
         #client_socket.sendall(data)
     finally:
         # Clean up the connection

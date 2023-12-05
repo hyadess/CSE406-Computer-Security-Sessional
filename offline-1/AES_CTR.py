@@ -58,5 +58,5 @@ def CTR_decrypt(array):  # input is an array of  bitstrings....
     return message
 
 
-print(CTR_decrypt(CTR_encrypt('I am proud. but no that much...... CTR is also done!!!!')))
+#print(CTR_decrypt(CTR_encrypt('I am proud. but no that much...... CTR is also done!!!!')))
 
