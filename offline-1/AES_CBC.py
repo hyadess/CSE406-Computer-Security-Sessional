@@ -48,32 +48,3 @@ def CBC_decrypt(array):  # input is an array of  bitstrings....
 
 print(CBC_decrypt(CBC_encrypt('I am proud. but no that much...... now I can add more and more!!!!??????______!')))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Example
-message_chunk = "abc"
-xor_number = 0x0
-
-
-# Example
-# message = "This is a sample message. but lets see what can happen to be here"
-# result = divide_into_128_bit_strings(message)
-
-# print(result)
