@@ -1,7 +1,10 @@
-import byteworks
+import importlib
+
+byteworks=importlib.import_module("1905064_byteworks")
+keyGeneration=importlib.import_module("1905064_keyGeneration")
+bitvector_demo=importlib.import_module("1905064_bitvector_demo")
 import numpy as np
-import keyGeneration
-import bitvector_demo
+
 from BitVector import *
 def bytesubstitution(array):
     

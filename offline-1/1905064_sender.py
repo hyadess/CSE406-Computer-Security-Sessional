@@ -1,12 +1,14 @@
 import socket
-import encryptOp
-import pickle
-import AES_CBC
-import AES_CTR
-import sender_receiver_helper
-import ECDH_key_production
 import time
-import keyGeneration
+import pickle
+import importlib
+encryptOp=importlib.import_module("1905064_encryptOp")
+AES_CBC=importlib.import_module("1905064_AES_CBC")
+AES_CTR=importlib.import_module("1905064_AES_CTR")
+sender_receiver_helper=importlib.import_module("1905064_sender_receiver_helper")
+ECDH_key_production=importlib.import_module("1905064_ECDH_key_production")
+keyGeneration=importlib.import_module("1905064_keyGeneration")
+
 
 communicateSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

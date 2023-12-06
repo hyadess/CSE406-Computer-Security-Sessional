@@ -1,4 +1,6 @@
-import bitvector_demo
+
+import importlib
+bitvector_demo=importlib.import_module("1905064_bitvector_demo")
 
 def binaryConvert(char):
     ascii= ord(char)

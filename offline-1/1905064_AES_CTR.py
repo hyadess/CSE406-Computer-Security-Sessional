@@ -1,8 +1,10 @@
 
 import secrets
-import bitStringOp
-import encryptOp
-import decryptOp
+import importlib
+
+bitStringOp=importlib.import_module("1905064_bitStringOp")
+encryptOp=importlib.import_module("1905064_encryptOp")
+decryptOp=importlib.import_module("1905064_decryptOp")
 import numpy as np
 
 def CTR_encrypt(message):

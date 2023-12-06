@@ -1,9 +1,12 @@
-import byteworks
+import importlib
+
+byteworks=importlib.import_module("1905064_byteworks")
+keyGeneration=importlib.import_module("1905064_keyGeneration")
+bitvector_demo=importlib.import_module("1905064_bitvector_demo")
 import numpy as np
-import keyGeneration
-import bitvector_demo
+
 from BitVector import *
-import encryptOp
+
 def invBytesubstitution(array):
     
     for i in range(0,4):
@@ -78,6 +81,3 @@ def decryption(msg):
     return ans
 
 
-
-# text=decryption(encryptOp.ciphertext)
-# print(text)

@@ -1,10 +1,16 @@
 import socket
-import decryptOp
+
+import importlib
+decryptOp=importlib.import_module("1905064_decryptOp")
+AES_CBC=importlib.import_module("1905064_AES_CBC")
+AES_CTR=importlib.import_module("1905064_AES_CTR")
+sender_receiver_helper=importlib.import_module("1905064_sender_receiver_helper")
+ECDH_key_production=importlib.import_module("1905064_ECDH_key_production")
+
+
 import pickle
-import AES_CBC
-import AES_CTR
-import sender_receiver_helper
-import ECDH_key_production
+
+
 import time
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

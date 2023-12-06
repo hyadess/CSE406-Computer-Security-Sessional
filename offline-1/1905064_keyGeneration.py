@@ -1,5 +1,6 @@
 import numpy as np
-import byteworks
+import importlib
+byteworks=importlib.import_module("1905064_byteworks")
 import time
 
 def showMatrix(array):
