@@ -1,5 +1,6 @@
 import numpy as np
 import byteworks
+import time
 
 def showMatrix(array):
     hex_array = np.vectorize(lambda x: hex(int(x, 2)))(array)
@@ -69,5 +70,12 @@ def keyGeneration(str):
     return keys
 
 
-keys=keyGeneration('Thats my Kung Fu')
+keys=keyGeneration("BUET CSE19 Batch")
+def inputKeyGen():
+    global keys
+    msg=input("enter the key:")
+    start=time.time()
+    keys=keyGeneration(msg)
+    end=time.time()
+    print("time for key generation: ",(end-start)*1000,"ms")
 # showMatrix(keys)
