@@ -66,13 +66,24 @@ while True:
     print("Connected to", client_address)
 
     try:
+        avg=0
         for i in range(5):
             print()
             print("run ",i+1)
             start=time.time()
             sharedKey=keyExchange(communicateSocket)
             end=time.time()
+            avg+=end-start
             print("time for setting up shared secret key: ",(end-start)*1000,"ms")
+        avg=avg/5
+        print()
+        print('average time: ',avg)
+        print()
+
+
+
+
+
 
         bitstrings=bitStringOp.intToBitstrings(sharedKey)
         keyGeneration.ECDHKeygen(bitstrings)
@@ -85,8 +96,8 @@ while True:
 
 
         start=time.time()
-        #message=AES_CBC.CBC_decrypt(received_bitstrings)
-        message=AES_CTR.CTR_decrypt(received_bitstrings)
+        message=AES_CBC.CBC_decrypt(received_bitstrings)
+        #message=AES_CTR.CTR_decrypt(received_bitstrings)
         end=time.time()
         print("time for decryption: ",(end-start)*1000,"ms")
 

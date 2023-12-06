@@ -90,13 +90,23 @@ def keyExchange(communicateSocket):
 try:
 
     #way 1....................................
+    avg=0
     for i in range(5):
         print()
         print("run ",i+1)
         start=time.time()
         sharedKey=keyExchange(communicateSocket)
         end=time.time()
+        avg+=end-start
         print("time for setting up shared secret key: ",(end-start)*1000,"ms")
+    avg=avg/5
+    print()
+    print('average time: ',avg)
+    print()
+
+
+
+
 
     bitstrings=bitStringOp.intToBitstrings(sharedKey)
     keyGeneration.ECDHKeygen(bitstrings)
@@ -113,8 +123,8 @@ try:
     message = input("enter the message: ")
 
     start=time.time()
-    #msgArray=AES_CBC.CBC_encrypt(message)
-    msgArray=AES_CTR.CTR_encrypt(message)
+    msgArray=AES_CBC.CBC_encrypt(message)
+    #msgArray=AES_CTR.CTR_encrypt(message)
     end=time.time()
     print("time for encryption: ",(end-start)*1000,"ms")
 
