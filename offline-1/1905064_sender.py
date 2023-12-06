@@ -2,13 +2,14 @@ import socket
 import time
 import pickle
 import importlib
+
 encryptOp=importlib.import_module("1905064_encryptOp")
 AES_CBC=importlib.import_module("1905064_AES_CBC")
 AES_CTR=importlib.import_module("1905064_AES_CTR")
 sender_receiver_helper=importlib.import_module("1905064_sender_receiver_helper")
 ECDH_key_production=importlib.import_module("1905064_ECDH_key_production")
 keyGeneration=importlib.import_module("1905064_keyGeneration")
-
+bitStringOp=importlib.import_module("1905064_bitStringOp")
 
 communicateSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -21,20 +22,20 @@ communicateSocket.connect(server_address)
 #will receive receiver's public key..
 #create shared secret key.................
 def keyExchange(communicateSocket):
-    p = 2**128 - 3
-    a = 2
-    b = 2
+    p = 2**128 - 159
+    a = 3
+    b = 4
     gx = 5
-    gy = 1
+    gy = 12
   
     sender_receiver_helper.sendNumber(communicateSocket,gx)
     sender_receiver_helper.sendNumber(communicateSocket,gy)
-    print("point G is sent")
+    #print("point G is sent")
     sender_receiver_helper.sendNumber(communicateSocket,a)
     sender_receiver_helper.sendNumber(communicateSocket,b)
-    print(" parameters a and b are sent")
+    #print(" parameters a and b are sent")
     sender_receiver_helper.sendNumber(communicateSocket,p)
-    print("prime p is sent")
+    #print("prime p is sent")
 
 
 
@@ -42,18 +43,19 @@ def keyExchange(communicateSocket):
     publicKeyX,publicKeyY=publicKey
     sender_receiver_helper.sendNumber(communicateSocket,publicKeyX)
     sender_receiver_helper.sendNumber(communicateSocket,publicKeyY)
-    print("public key point is sent to receiver")
-    print(publicKey)
+    #print("public key point is sent to receiver")
+    #print(publicKey)
 
 
     receiverKeyX=sender_receiver_helper.receiveNumber(communicateSocket)
     receiverKeyY=sender_receiver_helper.receiveNumber(communicateSocket)
-    print("public key point is recieved from receiver")
-    print(receiverKeyX,receiverKeyY)
+    #print("public key point is recieved from receiver")
+    #print(receiverKeyX,receiverKeyY)
 
 
     sharedKey=ECDH_key_production.generateSharedKey(privateKey,(receiverKeyX,receiverKeyY),a,p)
     print(sharedKey)
+    return sharedKey
 
 
 
@@ -61,8 +63,26 @@ def keyExchange(communicateSocket):
 
 
 try:
-    #keyExchange(communicateSocket)
-    keyGeneration.inputKeyGen()
+
+    #way 1....................................
+
+    start=time.time()
+    sharedKey=keyExchange(communicateSocket)
+    end=time.time()
+    print("time for setting up shared secret key: ",(end-start)*1000,"ms")
+
+    bitstrings=bitStringOp.intToBitstrings(sharedKey)
+    keyGeneration.ECDHKeygen(bitstrings)
+
+
+    ##way 2................................
+
+    #keyGeneration.inputKeyGen()
+
+
+
+
+
     message = input("enter the message: ")
 
     start=time.time()

@@ -71,7 +71,25 @@ def keyGeneration(str):
     return keys
 
 
+def keyGenerationBitString(array):
+    np_1dArray=np.array(array)
+    row=column=4
+    np_2dArray=np.reshape(np_1dArray,(row,column))
+    keys=[]
+    keys.append(np_2dArray) #round 0 key...................
+    for i in range(1,11):
+        prevkey=keys[i-1]
+        keys.append(oneRoundKey(prevkey,i))
+    for i in range(0,11):
+        keys[i]=np.transpose(keys[i])
+    #showMatrix(keys)
+    return keys
+
+
+
+
 keys=keyGeneration("BUET CSE19 Batch")
+
 def inputKeyGen():
     global keys
     msg=input("enter the key:")
@@ -79,4 +97,11 @@ def inputKeyGen():
     keys=keyGeneration(msg)
     end=time.time()
     print("time for key generation: ",(end-start)*1000,"ms")
+
+def ECDHKeygen(array):
+    global keys
+    start=time.time()
+    keys=keyGenerationBitString(array)
+    end=time.time()
+    print("time for ECDH key generation: ",(end-start)*1000,"ms")
 # showMatrix(keys)

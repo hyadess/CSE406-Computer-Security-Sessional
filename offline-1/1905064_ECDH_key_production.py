@@ -40,6 +40,7 @@ def pointDoubling(p1,a,p):
         return inf
 
     x, y = p1
+    #print(x,y)
     s=((3*x**2+a)*pow(2*y,-1,p))%p
     x3=(s**2-2*x)%p
     y3=(s*(x-x3)-y)%p
@@ -47,8 +48,9 @@ def pointDoubling(p1,a,p):
     return (x3,y3)
 
 
-def scalarMultiplication(k, point,a,p):
+def scalarMultiplication(kk, point,a,p):
     result = point
+    k=kk
     while k > 0:
         if k % 2 == 1:
             result = pointAddition(result, point,a,p)
@@ -62,7 +64,8 @@ def calculateE(p):
 
 
 def generatePublicPrivatePair(gx,gy,a,p):
-    private_key = randint(1, calculateE(p) - 1)
+    private_key = randint(1, 2**100-57 - 1)
+    #print(gx,gy,a,p)
     public_key = scalarMultiplication(private_key, (gx, gy),a,p)
     return private_key, public_key
 
