@@ -51,7 +51,7 @@ def keyExchange(communicateSocket):
     #print(publicKey)
     
     sharedKey=ECDH_key_production.generateSharedKey(privateKey,(receiverKeyX,receiverKeyY),a,p)
-    print(sharedKey)
+    print("shared secret key:",hex(sharedKey))
     return sharedKey
 
 
@@ -66,11 +66,13 @@ while True:
     print("Connected to", client_address)
 
     try:
-
-        start=time.time()
-        sharedKey=keyExchange(communicateSocket)
-        end=time.time()
-        print("time for setting up shared secret key: ",(end-start)*1000,"ms")
+        for i in range(5):
+            print()
+            print("run ",i+1)
+            start=time.time()
+            sharedKey=keyExchange(communicateSocket)
+            end=time.time()
+            print("time for setting up shared secret key: ",(end-start)*1000,"ms")
 
         bitstrings=bitStringOp.intToBitstrings(sharedKey)
         keyGeneration.ECDHKeygen(bitstrings)

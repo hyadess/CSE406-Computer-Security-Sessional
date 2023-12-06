@@ -1,6 +1,7 @@
 import hashlib
 import math
 from random import randint
+from sympy import prevprime
 
 # Elliptic Curve parameters for secp256r1
 # p = 0xFFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF
@@ -59,12 +60,13 @@ def scalarMultiplication(kk, point,a,p):
     return result
 
 def calculateE(p):
-    lowerE = p + 1 - int(math.sqrt(p))
-    return lowerE
+    offset=randint(1,2**20)
+    E=prevprime(p + 1 - int(math.sqrt(p))-offset)
+    return E
 
 
 def generatePublicPrivatePair(gx,gy,a,p):
-    private_key = randint(1, 2**100-57 - 1)
+    private_key = randint(1, calculateE(p) - 1)
     #print(gx,gy,a,p)
     public_key = scalarMultiplication(private_key, (gx, gy),a,p)
     return private_key, public_key

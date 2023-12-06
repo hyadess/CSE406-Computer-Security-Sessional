@@ -2,7 +2,9 @@ import socket
 import time
 import pickle
 import importlib
-
+from sympy import prevprime
+from random import randint
+import math
 encryptOp=importlib.import_module("1905064_encryptOp")
 AES_CBC=importlib.import_module("1905064_AES_CBC")
 AES_CTR=importlib.import_module("1905064_AES_CTR")
@@ -16,17 +18,40 @@ communicateSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('localhost', 12345)
 communicateSocket.connect(server_address)
 
+p = 2**128 - 159
+a = 3
+b = 4
+gx = 5
+gy = 12
+
+
+
+def randomGeneration():
+
+    # we will randomly generate p,a,gx,gy and then calculate b....................
+    global p
+    offset=randint(1,2**20)
+    p=prevprime(2**128-offset) #to add some randomness.........................
+
+
+    offset=randint(1,2**20)
+    E=prevprime(p + 1 - int(math.sqrt(p))-offset)  # E is atleast p+1 - root (p)  ..and offset for randomness
+
+    global a
+    a=randint(2,E-1)%p
+    global gx
+    gx=randint(1,2**25)%p # as we need to cube it
+    global gy
+    gy=randint(1,2**25)%p
+    global b
+    b=((gy*gy)%p -(((gx*gx)%p)*gx)%p-(a*gx)%p)%p
 
 
 #sender will send gx,gy,a,b,p, public key.................
 #will receive receiver's public key..
 #create shared secret key.................
 def keyExchange(communicateSocket):
-    p = 2**128 - 159
-    a = 3
-    b = 4
-    gx = 5
-    gy = 12
+    randomGeneration()
   
     sender_receiver_helper.sendNumber(communicateSocket,gx)
     sender_receiver_helper.sendNumber(communicateSocket,gy)
@@ -54,7 +79,7 @@ def keyExchange(communicateSocket):
 
 
     sharedKey=ECDH_key_production.generateSharedKey(privateKey,(receiverKeyX,receiverKeyY),a,p)
-    print(sharedKey)
+    print("shared secret key:",hex(sharedKey))
     return sharedKey
 
 
@@ -65,11 +90,13 @@ def keyExchange(communicateSocket):
 try:
 
     #way 1....................................
-
-    start=time.time()
-    sharedKey=keyExchange(communicateSocket)
-    end=time.time()
-    print("time for setting up shared secret key: ",(end-start)*1000,"ms")
+    for i in range(5):
+        print()
+        print("run ",i+1)
+        start=time.time()
+        sharedKey=keyExchange(communicateSocket)
+        end=time.time()
+        print("time for setting up shared secret key: ",(end-start)*1000,"ms")
 
     bitstrings=bitStringOp.intToBitstrings(sharedKey)
     keyGeneration.ECDHKeygen(bitstrings)
